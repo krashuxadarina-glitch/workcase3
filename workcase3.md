@@ -16,7 +16,7 @@
 **Руда Дарина Сергіївна**
 
 **Перевірив викладач:**  
-Сушанова Вікторія Сергіївна  
+**Сушанова Вікторія Сергіївна**
 
 **Київ — 2026**
 
@@ -30,42 +30,48 @@
 
 1. Обрано вимкнену основну віртуальну машину Fedora.
 2. Натиснуто кнопку **«Клонувати»**.
-3. Вказано нову назву:
+  <img width="500" height="734" alt="image" src="https://github.com/user-attachments/assets/a1c133dd-0557-4567-8c93-9d8d88a89d8c" />
 
-Fedora клонн
+3. Вказала нову назву — «Fedora клонн»: <img width="776" height="506" alt="image" src="https://github.com/user-attachments/assets/83c99745-d9ff-4338-85a8-0c9cf5bcfa0e" />
+4.Для запобігання конфліктів у мережі я змінила налаштування MAC Address Policy на «Generate new MAC addresses for all network adapters». <img width="765" height="500" alt="image" src="https://github.com/user-attachments/assets/d7158493-a5e7-4322-9d0b-f339d1fbcd80" />
 
-4. У параметрі **MAC Address Policy** обрано:
 
-Generate new MAC addresses for all network adapters
 
-5. Тип клонування — **Повний клон (Full Clone)**.
+4. Тип клонування обрала «Повний клон».<img width="927" height="1007" alt="image" src="https://github.com/user-attachments/assets/0bcaf7cc-fa84-4963-8c73-d503c1fab060" />
+
 
 **Результат:** створено повністю незалежну копію системи.
 
 ---
 
 # 2. Огляд мережевих інтерфейсів VirtualBox
+Для забезпечення зв'язку віртуальної машини із зовнішнім світом та іншими пристроями, я вивчила основні типи мережевих адаптерів у VirtualBox. Кожен із них має своє призначення:
 
-## 2.1 NAT (Network Address Translation)
+
+## 2.1 NAT (Network Address Translation)NAT (Network Address Translation): Це стандартний режим. Віртуальна машина отримує доступ до інтернету через IP-адресу хоста (мого Windows). Проте, вона залишається «невидимою» для інших пристроїв у моїй домашній мережі.<img width="747" height="677" alt="image" src="https://github.com/user-attachments/assets/a3f80131-280b-4f8a-849a-7e16facd151a" />
+
 
 - Стандартний режим.
 - Доступ до Інтернету через IP-адресу хоста.
 - Віртуальна машина невидима для інших пристроїв мережі.
 
-## 2.2 Bridged Adapter (Мережевий міст)
+## 2.2 Bridged Adapter (Мережевий міст)Це режим, який я обрала для виконання роботи Віртуальна машина підключається безпосередньо до мого мережевого адаптера. Вона стає повноцінним учасником мережі, отримуючи власну IP-адресу від роутера (наприклад, 192.168.0.137). Саме цей режим дозволяє мені вільно користуватися YouTube, оскільки Fedora має прямий і швидкий канал зв’язку з інтернетом, аналогічно до мого основного комп'ютера.
+<img width="931" height="1011" alt="image" src="https://github.com/user-attachments/assets/98625d54-38f8-48c5-8eb2-819c88889d91" />
 
 - VM отримує власну IP-адресу від роутера.
 - Повноцінна участь у локальній мережі.
 - Забезпечує стабільний доступ до Інтернету.
 - Використано для виконання роботи.
 
-## 2.3 Internal Network
+## 2.3 Internal Network.Використовується для створення ізольованої мережі, де машини бачать лише одна одну, але не мають доступу до Windows або інтернету. Це корисно для тестування вірусів або закритих серверів.
+
 
 - Ізольована мережа.
 - Машини бачать лише одна одну.
 - Немає доступу до хоста або Інтернету.
 
-## 2.4 Host-only Adapter
+## 2.4 Host-only Adapter.Створює мережу виключно між реальним комп'ютером та віртуальною машиною. Інтернету в такому режимі зазвичай немає, але це зручно для передачі файлів безпосередньо між системами.
+
 
 - З'єднання лише між хостом та VM.
 - Інтернет зазвичай відсутній.
@@ -75,63 +81,125 @@ Generate new MAC addresses for all network adapters
 
 # 3. Налаштування мережі та перевірка зв'язку
 
-## 3.1 Перевірка IP-адреси
+## 3.1 Запуск системи: Оскільки при першому запуску клон не побачив жорсткий диск, я перейшла в налаштування «Пам'ять» і підключила ISO-образ системи до віртуального привода.
+<img width="753" height="446" alt="image" src="https://github.com/user-attachments/assets/d53f9edf-ed3b-4758-9f26-ed4c400738fc" />
 
-У терміналі виконано команду:
-
-```bash
-ip a
-
-Результат:
-
-Інтерфейс: enp0s3
-
-IP-адреса: 192.168.0.137
-
-Отримання адреси через DHCP
-
-3.2 Перевірка Інтернет-з’єднання
-
-У браузері Firefox відкрито відео на YouTube.
-
-Результат:
+## 3.2 **Діагностика мережі: Я відкрила термінал і ввела команду ip a. Моя машина отримала внутрішню адресу 192.168.0.137.** <img width="752" height="564" alt="image" src="https://github.com/user-attachments/assets/4f8e9268-358b-4043-aa15-3046c35dac20" />
+## 3.3 **Перевірка інтернету: Я запустила браузер Firefox і відкрила YouTube. Завдяки налаштованому «мосту» мережа запрацювала миттєво.**
+<img width="931" height="1011" alt="image" src="https://github.com/user-attachments/assets/f5910bf7-0f9d-48ae-9efb-1e065077fa25" /> Результат:
 
 Відео відтворюється без затримок.
 
-DNS працює коректно.
 
-Мережа функціонує стабільно.
-
-3.3 Обмін повідомленнями через Netcat
-Вимкнення брандмауера
-sudo systemctl stop firewalld
-Запуск сервера
-nc -l 1234
-Підключення з іншої машини
-nc 192.168.0.137 1234
-
-Результат передачі:
+##**3.4 Створення чату (netcat): Для перевірки зв'язку між ОС я використала утиліту nc. На клоні я запустила сервер (nc -l 1234), а з іншої машини підключилася за своєю IP-адресою, що дозволило передавати текстові повідомлення в режимі реального часу.**
+<img width="889" height="472" alt="image" src="https://github.com/user-attachments/assets/2a5a992c-9505-4caa-b1ee-7e509dfecce5" />
+<img width="769" height="442" alt="image" src="https://github.com/user-attachments/assets/20f2e678-7495-48c9-971c-28e8c20bcb7f" /> Результат передачі:
 
 Hello, Clone!
 
 Передача даних відбулася успішно.
 
-4. Обмін файлами між хостом та VM
-4.1 Налаштування спільної папки
 
-Меню: Пристрої → Спільні теки
+
+
+# 4. Обмін файлами між хостом та VM
+* Я налаштувала зручний спосіб передачі даних між Windows та Fedora:
+
+## 4.1 Налаштування спільної папки
+Налаштування спільної папки: У меню «Пристрої» -> «Спільні теки» я додала папку зі свого комп’ютера (C:\Users\User\Downloads).
+
 
 Додано папку:
-
+```
 C:\Users\User\Downloads
+```
+<img width="561" height="240" alt="image" src="https://github.com/user-attachments/assets/fc0b59d7-f62c-4146-8c7d-f49b1957f307" />
 
-Активовано:
+## 4.2 Параметри доступу: Я позначила «Автоматичне монтування», щоб папка з'являлася сама при запуску.<img width="549" height="484" alt="image" src="https://github.com/user-attachments/assets/dd80d5f6-9099-4ba7-8c59-6045b67db69c" />
+## 4.3 Передача аудіо: Я відкрила файловий менеджер у Fedora, перейшла до розділу «Other Locations» і знайшла там змонтований диск sf_Downloads. Звідти я скопіювала аудіофайл на робочий стіл Fedora.
+## 4.4 Зворотна дія: Для передачі документа з Fedora назад у Windows я просто перетягнула його в папку sf_Downloads, і він став доступним на моєму основному ПК.<img width="319" height="249" alt="image" src="https://github.com/user-attachments/assets/0b59320a-cf8a-4a5f-8d9e-aeeb51e5f278" />
 
-Автоматичне монтування
+# Завдання 5. Розгортання та налаштування мережі між двома ОС
+  Для виконання роботи було використано гіпервізор Oracle VirtualBox та дві віртуальні машини з Fedora Linux. Це дозволило змоделювати роботу локальної мережі без використання додаткового фізичного обладнання.
+## 5.1. Ідентифікація вузлів у мережі
+Першим кроком після запуску системи є перевірка мережевої конфігурації.
+<img width="746" height="538" alt="image" src="https://github.com/user-attachments/assets/35885100-92b4-4d97-872e-4f674f57a81f" />
+Команда:
+```
+ip a.
+```
+Деталі: На скриншоті видно, що мережевий адаптер enp0s3 отримав IP-адресу 192.168.0.137. Це підтверджує, що віртуальна машина успішно підключена до мережі через DHCP-сервер.
+<img width="749" height="527" alt="image" src="https://github.com/user-attachments/assets/dffd2a2f-e646-46e4-92ca-86a66e2ac45c" />
+<img width="758" height="401" alt="image" src="https://github.com/user-attachments/assets/c4db4033-7a6e-4f95-829b-766cd1396557" /> <img width="753" height="539" alt="image" src="https://github.com/user-attachments/assets/741037db-8b28-45e2-a118-780380fba0c3" />
+## 5.2  Тестування Інтернет-з’єднання та мультимедіа
+  Для перевірки стабільності зв’язку було використано веб-ресурси з високим навантаженням на мережевий канал.
+<img width="957" height="947" alt="image" src="https://github.com/user-attachments/assets/ba32f697-4381-4774-9723-dedd5a2d6bb9" />
+Дія:
+```
+У браузері відкрито відео "Introduction to OPERATING SYSTEM" на YouTube.
+```
+Результат: 
+```
+Безперебійне відтворення відео підтверджує коректну роботу DNS та високу швидкість передачі даних через віртуальний міст.
+```
+## 5.3 Обмін повідомленнями через термінал (Netcat)
+  Це завдання демонструє передачу "сирих" даних між двома вузлами мережі.
+Алгоритм:
+1. На одній машині вимкнено фаєрвол: sudo systemctl stop firewalld.
+2. Запущено режим прослуховування: nc -l 1234.
+3. З іншої машини відправлено текст: nc 192.168.0.137 1234.
+Результат: На скриншоті видно напис "Hello, Clone!", що підтверджує успішну передачу даних на прикладному рівні мережі.<img width="949" height="1012" alt="image" src="https://github.com/user-attachments/assets/c67de05f-1ee3-4188-ab77-eab24db53d97" />
+# Завдання 6. Обмін інформацією між хостом та віртуальною ОС
+## 6.1. Налаштування спільного буфера<img width="751" height="439" alt="image" src="https://github.com/user-attachments/assets/4d5fa69e-b150-4edf-a3b5-eef6099ba8a4" /> 
+  Для зручності роботи в меню «Пристрої» активовано «Двонапрямний» спільний буфер. Це дозволяє миттєво копіювати текст між Windows та Fedora.
+## 6.2. Передача аудіофайлів (Кейс: Email-синхронізація)
+Це завдання демонструє універсальний метод обміну файлами через хмарні сервіси.
+<img width="756" height="502" alt="image" src="https://github.com/user-attachments/assets/741ae272-7018-4b87-b500-c58647cf2b79" />
+<img width="754" height="432" alt="image" src="https://github.com/user-attachments/assets/4d526660-d92e-4655-8108-cb8c172100a8" />
+Результат: успішно завантажила аудіо
+## Отримання листа
+<img width="753" height="619" alt="image" src="https://github.com/user-attachments/assets/31af2d24-c43f-44de-a3d7-7da766b97b0d" /> 
+Опис: У віртуальній машині відкрито Gmail, де зафіксовано вхідний лист із файлом пісня аудіо.mp3.
+<img width="752" height="674" alt="image" src="https://github.com/user-attachments/assets/f02462c7-5cd0-4362-9f00-577e1786507e" />
+<img width="754" height="497" alt="image" src="https://github.com/user-attachments/assets/9aa8423b-e489-48b4-8829-634f3810a5f7" />
+Дія: Файли tvorchi-buvae.mp3 та пісня аудіо.mp3 завантажуються безпосередньо в систему через браузер.
+## 6.3. Останній етап: Перевірка отримання на хості
+Останній скриншот демонструє фіналізацію процесу обміну даними.
+Дія: На основній операційній системі (хості) відкрито браузер, де відображається отриманий лист "try to know if its work" з прикріпленим аудіофайлом.<img width="567" height="578" alt="image" src="https://github.com/user-attachments/assets/a92f0858-b68a-4666-8882-4b31345fe072" /> Значення: Це підтверджує повний цикл обміну: файл було створено/знайдено у віртуальній ОС та успішно передано на основну робочу станцію. <img width="959" height="1028" alt="image" src="https://github.com/user-attachments/assets/6795b8f8-250a-4fcd-a837-e9b8a1dcb205" /> 
+# Conclusions 
+  During this laboratory work, I have gained practical skills in managing virtual environments. I learned how to clone operating systems to preserve configurations and how to set up Bridged Networking for seamless communication between guest and host systems. I successfully performed data transfer using both terminal-based utilities like Netcat and web-based services like Gmail. This experience is essential for understanding how isolated systems interact in real-world network infrastructures.
 
-У Fedora папка відображається як:
 
-sf_Downloads
+## Key Terms Learned (Ключові терміни):
+Virtual Machine (VM) — віртуальна машина.
+Bridged Adapter — мережевий міст (надає VM доступ до локальної мережі).
+IP Address — унікальний ідентифікатор пристрою в мережі.
+Netcat (nc) — утиліта для читання та запису даних через мережеві підключення.
+Shared Clipboard — спільний буфер обміну між гостьовою та хостовою ОС.
+Firewall — брандмауер (захисна система, яку ми вимикали для пропуску трафіку).
+Guest Additions — пакет драйверів для покращення інтеграції віртуальної машини з хостом.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 4.2 Передача файлів через Gmail
 
 Відкрито Gmail у браузері Fedora.
